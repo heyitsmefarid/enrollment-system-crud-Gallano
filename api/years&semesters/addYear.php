@@ -14,7 +14,7 @@ if (!$year_from || !$year_to) {
 
 try {
 
-    $stmt = $pdo->prepare("INSERT INTO years_tbl (year_from, year_to) VALUES (?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO year_tbl (year_from, year_to) VALUES (?, ?)");
    
     $stmt->execute([$year_from, $year_to]);
 

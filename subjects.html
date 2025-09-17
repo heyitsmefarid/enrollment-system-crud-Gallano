@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subjects Management</title>
+  <link rel="stylesheet" href="subjects.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="logo">🎓</div>
+      <div class="title">Student Portal</div>
+    </div>
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Students</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="years_semesters.html">Years & Semesters</a></li>
+        <li><a href="subjects.html" class="active">Subjects</a></li>
+        <li><a href="enrollments.html">Enrollments</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- SEARCH + ADD -->
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search subjects...">
+    <button id="addSubjectBtn">Add Subject</button>
+  </div>
+
+  <!-- TABLE -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Subject Name</th>
+        <th>Semester ID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="subjectsTableBody">
+      <!-- JS will render subjects here -->
+    </tbody>
+  </table>
+
+  <!-- MODAL -->
+  <div id="subjectModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle">Add Subject</h2>
+      <form id="subjectForm">
+        <input type="hidden" id="subject_id" name="subject_id">
+
+        <label>Subject Name:</label>
+        <input type="text" id="subject_name" name="subject_name" required>
+
+        <label>Semester ID:</label>
+        <input type="text" id="sem_id" name="sem_id" required>
+
+        <button type="submit" id="saveSubjectBtn">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="subjects.js"></script>
+</body>
+</html>

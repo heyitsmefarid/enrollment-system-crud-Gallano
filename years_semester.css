@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f7f7f7;
+  margin: 0;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  padding: 12px 28px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  min-height: 64px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo { font-size: 1.4rem; color: #fff; }
+.title { color: #fff; font-size: 1.2rem; font-weight: 700; }
+
+/* Nav */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li a {
+  display: inline-block;
+  padding: 10px 16px;
+  color: rgba(255,255,255,0.97);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.navbar ul li a.active { background: rgba(255,255,255,0.22); color: #fff; }
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#searchInput {
+  padding: 10px 40px 10px 14px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 14px;
+}
+
+#addYearBtn, #addSemesterBtn {
+  padding: 8px 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+#addYearBtn:hover, #addSemesterBtn:hover { background: #0056b3; }
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-bottom: 30px;
+}
+table th, table td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+
+/* Buttons */
+.update-btn { padding: 4px 8px; background: #28a745; color: white; border: none; border-radius:3px; cursor:pointer; }
+.delete-btn { padding: 4px 8px; background: #dc3545; color:white; border:none; border-radius:3px; cursor:pointer; }
+
+/* Modal */
+.modal { display: none; position: fixed; z-index: 999; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.4); }
+.modal-content { background:#fff; margin:8% auto; padding:20px; border-radius:10px; width:400px; }
+.close { float:right; font-size:28px; font-weight:bold; cursor:pointer; }
+.close:hover { color:black; }
+
+form input { width:100%; padding:6px; margin-bottom:10px; }
+form button { width:100%; padding:8px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; }
+form button:hover { background:#0056b3; }
+
+/* Responsive */
+@media (max-width:700px) {
+  header { flex-direction: column; align-items:flex-start; gap:8px; }
+  .navbar ul { flex-wrap: wrap; width:100%; }
+  .controls { flex-direction: column; }
+}
