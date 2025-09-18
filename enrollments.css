@@ -94,7 +94,7 @@ header {
   box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
 }
 
-#addStudentBtn {
+#addEnrollmentBtn {
   padding: 8px 16px;
   background: #007bff;
   color: #fff;
@@ -103,7 +103,7 @@ header {
   cursor: pointer;
 }
 
-#addStudentBtn:hover {
+#addEnrollmentBtn:hover {
   background: #0056b3;
 }
 
@@ -169,14 +169,15 @@ table th, table td {
   color: black;
 }
 
-#studentForm input {
+#enrollmentForm input,
+#enrollmentForm select {
   width: 100%;
   padding: 6px;
   margin-bottom: 10px;
   box-sizing: border-box;
 }
 
-#saveStudentBtn {
+#saveEnrollmentBtn {
   width: 100%;
   padding: 8px;
   background: #007bff;
@@ -186,7 +187,7 @@ table th, table td {
   cursor: pointer;
 }
 
-#saveStudentBtn:hover {
+#saveEnrollmentBtn:hover {
   background: #0056b3;
 }
 
@@ -204,5 +205,3 @@ table th, table td {
     flex-direction: column;
   }
 }
-
-

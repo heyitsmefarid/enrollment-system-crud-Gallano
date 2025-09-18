@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="years_semester.css">
 </head>
 <body>
-  <!-- HEADER -->
+
   <header>
     <div class="header-left">
       <div class="logo">🎓</div>
-      <div class="title">Student Portal</div>
+      <div class="title">Enrollment Portal</div>
     </div>
     <nav class="navbar">
       <ul>
@@ -24,14 +24,14 @@
     </nav>
   </header>
 
-  <!-- SEARCH + ADD -->
+ 
   <div class="controls">
     <input type="text" id="searchInput" placeholder="Search years & semesters...">
     <button id="addYearBtn">Add Year</button>
     <button id="addSemesterBtn">Add Semester</button>
   </div>
 
-  <!-- YEARS TABLE -->
+  
   <h2>Years</h2>
   <table>
     <thead>
@@ -45,7 +45,6 @@
     <tbody id="yearsTableBody"></tbody>
   </table>
 
-  <!-- SEMESTERS TABLE -->
   <h2>Semesters</h2>
   <table>
     <thead>
@@ -59,13 +58,11 @@
     <tbody id="semestersTableBody"></tbody>
   </table>
 
-  <!-- MODAL -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2 id="modalTitle">Add Entry</h2>
 
-      <!-- YEAR FORM -->
       <form id="yearForm" style="display:none;">
         <input type="hidden" id="year_id">
         <label>Year From:</label>
@@ -75,7 +72,6 @@
         <button type="submit" id="saveYearBtn">Save</button>
       </form>
 
-      <!-- SEMESTER FORM -->
       <form id="semesterForm" style="display:none;">
         <input type="hidden" id="sem_id">
         <label>Semester Name:</label>

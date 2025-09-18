@@ -5,7 +5,6 @@ body {
   margin: 0;
 }
 
-/* --- Header container --- */
 header {
   background: linear-gradient(135deg, #007bff, #00c6ff);
   padding: 12px 28px;
@@ -18,7 +17,6 @@ header {
   min-height: 64px;
 }
 
-/* --- Left group: logo + title --- */
 .header-left {
   display: flex;
   align-items: center;
@@ -37,7 +35,6 @@ header {
   letter-spacing: .3px;
 }
 
-/* --- Right nav --- */
 .navbar ul {
   list-style: none;
   display: flex;
@@ -68,7 +65,6 @@ header {
   color: #fff;
 }
 
-/* --- Controls --- */
 .controls {
   display: flex;
   justify-content: center;
@@ -111,7 +107,6 @@ header {
   background: #0056b3;
 }
 
-/* --- Table --- */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -124,7 +119,6 @@ table th, table td {
   text-align: center;
 }
 
-/* Buttons inside table */
 .update-btn {
   padding: 4px 8px;
   margin: 0 2px;
@@ -145,7 +139,6 @@ table th, table td {
   color: white;
 }
 
-/* --- Modal Styles --- */
 .modal {
   display: none;
   position: fixed;
@@ -197,7 +190,6 @@ table th, table td {
   background: #0056b3;
 }
 
-/* Responsive */
 @media (max-width: 700px) {
   header {
     flex-direction: column;

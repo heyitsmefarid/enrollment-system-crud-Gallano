@@ -8,23 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const semesterForm = document.getElementById("semesterForm");
     const modalTitle = document.getElementById("modalTitle");
 
-    let currentType = ""; // "year" or "semester"
+    let currentType = "";
     let currentId = null;
 
-    // Open modals
     addYearBtn.addEventListener("click", () => openModal("year"));
     addSemesterBtn.addEventListener("click", () => openModal("semester"));
     closeBtn.addEventListener("click", closeModal);
     searchInput.addEventListener("keyup", searchAll);
 
-    // Form submissions
     yearForm.addEventListener("submit", saveYear);
     semesterForm.addEventListener("submit", saveSemester);
 
     fetchYears();
     fetchSemesters();
 
-    // =================== MODAL HANDLERS =====================
     function openModal(type) {
         currentType = type;
         currentId = null;
@@ -47,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "none";
     }
 
-    // =================== FETCH =====================
     async function fetchYears() {
         try {
             const res = await fetch("api/years&semesters/getYear.php");
@@ -94,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch(err){ console.error("Fetch semesters error:", err); }
     }
 
-    // =================== SAVE =====================
     async function saveYear(e) {
         e.preventDefault();
         const year_from = document.getElementById("year_from").value.trim();
@@ -141,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch(err){ console.error("Save semester error:", err); }
     }
 
-    // =================== EDIT =====================
     window.editYear = (id, from, to) => {
         currentType = "year";
         currentId = id;
@@ -160,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("sem_year_id").value = yearId;
     }
 
-    // =================== DELETE =====================
     window.deleteYear = async (id) => {
         if(!confirm("Delete this year?")) return;
         const formData = new FormData();
@@ -185,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch(err){ console.error("Delete semester error:", err); }
     }
 
-    // =================== SEARCH =====================
     function searchAll() {
         const filter = searchInput.value.toLowerCase();
         const yearRows = document.querySelectorAll("#yearsTableBody tr");

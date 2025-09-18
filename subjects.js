@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchSubjects();
 });
 
-// =================== FETCH =====================
 async function fetchSubjects() {
     try {
         const res = await fetch("api/subject/getSubject.php");
@@ -39,7 +38,6 @@ async function fetchSubjects() {
     }
 }
 
-// =================== MODAL =====================
 let currentId = null;
 
 function openModal(type = "add") {
@@ -53,7 +51,6 @@ function closeModal() {
     document.getElementById("subjectModal").style.display = "none";
 }
 
-// =================== ADD/UPDATE =====================
 async function saveSubject(e) {
     e.preventDefault();
 
@@ -81,15 +78,13 @@ async function saveSubject(e) {
     }
 }
 
-// =================== EDIT =====================
 function editSubject(id, name, semId) {
-    currentId = id; // keep the ID for update
+    currentId = id;
     document.getElementById("subject_name").value = name;
     document.getElementById("sem_id").value = semId;
     openModal("update");
 }
 
-// =================== DELETE =====================
 async function deleteSubject(id) {
     if (!confirm("Delete this Subject?")) return;
 
@@ -106,7 +101,6 @@ async function deleteSubject(id) {
     }
 }
 
-// =================== SEARCH =====================
 function searchSubjects() {
     const filter = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll("#subjectsTableBody tr");

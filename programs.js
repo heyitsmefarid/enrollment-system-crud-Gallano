@@ -7,17 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchPrograms();
 
-    // Modal close handler
     document.querySelector(".close").onclick = closeModal;
 
-    // Save (Add/Update) program form submit
     document.getElementById("programForm").addEventListener("submit", saveProgram);
 });
 
-// === FETCH PROGRAMS ===
 async function fetchPrograms() {
     try {
-        const response = await fetch("api/program/getProgram.php"); // ✅ singular
+        const response = await fetch("api/program/getProgram.php"); 
         const result = await response.json();
         if (result.success) {
             renderTable(result.data);
@@ -29,7 +26,6 @@ async function fetchPrograms() {
     }
 }
 
-// === RENDER TABLE ===
 function renderTable(programs) {
     const tbody = document.getElementById("programTableBody");
     if (!tbody) return;
@@ -51,17 +47,16 @@ function renderTable(programs) {
     });
 }
 
-// === MODAL HANDLERS ===
 function openAddModal() {
     document.getElementById("modalTitle").textContent = "Add Program";
-    document.getElementById("program_id").value = ""; // hidden field
+    document.getElementById("program_id").value = ""; 
     document.getElementById("programForm").reset();
     openModal();
 }
 
 function openUpdateModal(id, name, ins_id) {
     document.getElementById("modalTitle").textContent = "Update Program";
-    document.getElementById("program_id").value = id; // hidden field
+    document.getElementById("program_id").value = id;
     document.getElementById("program_name").value = name;
     document.getElementById("ins_id").value = ins_id;
     openModal();
@@ -75,7 +70,6 @@ function closeModal() {
     document.getElementById("programModal").style.display = "none";
 }
 
-// === SAVE (ADD / UPDATE) ===
 async function saveProgram(e) {
     e.preventDefault();
     const id = document.getElementById("program_id").value.trim();
@@ -85,9 +79,8 @@ async function saveProgram(e) {
     const formData = new FormData();
     formData.append("program_name", name);
     formData.append("ins_id", ins_id);
-    if (id) formData.append("program_id", id); // only when updating
+    if (id) formData.append("program_id", id); 
 
-    // choose URL based on whether id is present
     const url = id ? "api/program/updateProgram.php" : "api/program/addProgram.php";
 
     try {
@@ -108,7 +101,6 @@ async function saveProgram(e) {
     }
 }
 
-// === DELETE ===
 async function deleteProgram(program_id) {
     if (!confirm("Are you sure you want to delete this program?")) return;
     const formData = new FormData();
@@ -131,7 +123,6 @@ async function deleteProgram(program_id) {
     }
 }
 
-// === SEARCH ===
 function searchProgram() {
     const filter = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll("#programTableBody tr");

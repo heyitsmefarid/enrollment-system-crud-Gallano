@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enrollments Management</title>
+  <link rel="stylesheet" href="enrollments.css">
+</head>
+<body>
+  
+  <header>
+    <div class="header-left">
+      <div class="logo">🎓</div>
+      <div class="title">Enrollment Portal</div>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Students</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="years_semesters.html">Years & Semesters</a></li>
+        <li><a href="subjects.html">Subjects</a></li>
+        <li><a href="enrollments.html" class="active">Enrollments</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search enrollments...">
+    <button id="addEnrollmentBtn">Add Enrollment</button>
+  </div>
+
+  <table id="enrollmentTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Program</th>
+        <th>Subject</th>
+        <th>Semester</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="enrollmentTableBody">
+
+    </tbody>
+  </table>
+
+  <div id="enrollmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle">Add Enrollment</h2>
+      <form id="enrollmentForm">
+        <input type="hidden" id="enrollment_id">
+
+        <label>Student:</label>
+        <select id="stud_id" required></select>
+
+        <label>Subject:</label>
+        <select id="subject_id" required></select>
+
+        <button type="submit" id="saveEnrollmentBtn">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="enrollments.js"></script>
+</body>
+</html>
