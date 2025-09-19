@@ -1,133 +1,234 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const addBtn = document.getElementById("addProgramBtn");
-    const searchInput = document.getElementById("searchInput");
+    const addProgramBtn = document.getElementById("addProgramBtn");
+    const addInstituteBtn = document.getElementById("addInstituteBtn");
+    const searchProgramInput = document.getElementById("searchProgramInput");
+    const searchInstituteInput = document.getElementById("searchInstituteInput");
 
-    if (addBtn) addBtn.addEventListener("click", openAddModal);
-    if (searchInput) searchInput.addEventListener("keyup", searchProgram);
+    if (addProgramBtn) addProgramBtn.addEventListener("click", openAddProgramModal);
+    if (addInstituteBtn) addInstituteBtn.addEventListener("click", openAddInstituteModal);
+    if (searchProgramInput) searchProgramInput.addEventListener("keyup", searchProgram);
+    if (searchInstituteInput) searchInstituteInput.addEventListener("keyup", searchInstitute);
+
+    document.querySelectorAll(".close").forEach(btn => btn.addEventListener("click", closeModal));
 
     fetchPrograms();
-
-    document.querySelector(".close").onclick = closeModal;
+    fetchInstitutes();
 
     document.getElementById("programForm").addEventListener("submit", saveProgram);
+    document.getElementById("instituteForm").addEventListener("submit", saveInstitute);
 });
 
 async function fetchPrograms() {
     try {
-        const response = await fetch("api/program/getProgram.php"); 
-        const result = await response.json();
-        if (result.success) {
-            renderTable(result.data);
-        } else {
-            console.error("Error fetching programs:", result.error);
-        }
+        const res = await fetch("api/program/getProgram.php");
+        const result = await res.json();
+        if (result.success) renderProgramTable(result.data);
     } catch (err) {
-        console.error("Fetch error:", err);
+        console.error("Fetch programs error:", err);
     }
 }
 
-function renderTable(programs) {
+async function fetchInstitutes() {
+    try {
+        const res = await fetch("api/program/getInstitute.php");
+        const result = await res.json();
+        if (result.success) {
+            renderInstituteTable(result.data);
+            populateProgramInstituteOptions(result.data);
+        }
+    } catch (err) {
+        console.error("Fetch institutes error:", err);
+    }
+}
+
+function renderProgramTable(programs) {
     const tbody = document.getElementById("programTableBody");
-    if (!tbody) return;
     tbody.innerHTML = "";
     programs.forEach(prog => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${prog.program_id}</td>
             <td>${prog.program_name}</td>
-            <td>${prog.ins_id}</td>
+            <td>${prog.ins_name || "-"}</td>
             <td>
-                <button class="update-btn" 
-                    onclick="openUpdateModal('${prog.program_id}', '${prog.program_name}', '${prog.ins_id}')">Update</button>
-                <button class="delete-btn" 
-                    onclick="deleteProgram('${prog.program_id}')">Delete</button>
+                <button class="update-btn" onclick="openUpdateProgramModal('${prog.program_id}','${prog.program_name}','${prog.ins_id}')">Update</button>
+                <button class="delete-btn" onclick="deleteProgram('${prog.program_id}')">Delete</button>
             </td>
         `;
         tbody.appendChild(tr);
     });
 }
 
-function openAddModal() {
-    document.getElementById("modalTitle").textContent = "Add Program";
-    document.getElementById("program_id").value = ""; 
-    document.getElementById("programForm").reset();
-    openModal();
+function renderInstituteTable(institutes) {
+    const tbody = document.getElementById("instituteTableBody");
+    tbody.innerHTML = "";
+    institutes.forEach(ins => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${ins.ins_id}</td>
+            <td>${ins.ins_name}</td>
+            <td>
+                <button class="update-btn" onclick="openUpdateInstituteModal('${ins.ins_id}','${ins.ins_name}')">Update</button>
+                <button class="delete-btn" onclick="deleteInstitute('${ins.ins_id}')">Delete</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
 }
 
-function openUpdateModal(id, name, ins_id) {
+function populateProgramInstituteOptions(institutes) {
+    const select = document.getElementById("program_ins_id");
+    if (!select) return;
+    select.innerHTML = "";
+    institutes.forEach(ins => {
+        const option = document.createElement("option");
+        option.value = ins.ins_id;
+        option.textContent = ins.ins_name;
+        select.appendChild(option);
+    });
+}
+
+function openAddProgramModal() {
+    document.getElementById("modalTitle").textContent = "Add Program";
+    document.getElementById("program_id").value = "";
+    document.getElementById("programForm").reset();
+    openModal("programModal");
+}
+
+function openUpdateProgramModal(id, name, ins_id) {
     document.getElementById("modalTitle").textContent = "Update Program";
     document.getElementById("program_id").value = id;
     document.getElementById("program_name").value = name;
-    document.getElementById("ins_id").value = ins_id;
-    openModal();
+    document.getElementById("program_ins_id").value = ins_id;
+    openModal("programModal");
 }
 
-function openModal() {
-    document.getElementById("programModal").style.display = "block";
+function openAddInstituteModal() {
+    document.getElementById("modalTitle").textContent = "Add Institute";
+    document.getElementById("ins_id").value = "";
+    document.getElementById("instituteForm").reset();
+    openModal("instituteModal");
+}
+
+function openUpdateInstituteModal(id, name) {
+    document.getElementById("modalTitle").textContent = "Update Institute";
+    document.getElementById("ins_id").value = id;
+    document.getElementById("ins_name").value = name;
+    openModal("instituteModal");
+}
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
 }
 
 function closeModal() {
-    document.getElementById("programModal").style.display = "none";
+    document.querySelectorAll(".modal").forEach(m => m.style.display = "none");
 }
 
 async function saveProgram(e) {
     e.preventDefault();
     const id = document.getElementById("program_id").value.trim();
     const name = document.getElementById("program_name").value.trim();
-    const ins_id = document.getElementById("ins_id").value.trim();
+    const ins_id = document.getElementById("program_ins_id").value.trim();
+
+    if (!name || !ins_id) { alert("Fill all fields"); return; }
 
     const formData = new FormData();
     formData.append("program_name", name);
     formData.append("ins_id", ins_id);
-    if (id) formData.append("program_id", id); 
+    if (id) formData.append("program_id", id);
 
     const url = id ? "api/program/updateProgram.php" : "api/program/addProgram.php";
 
     try {
-        const response = await fetch(url, {
-            method: "POST",
-            body: formData
-        });
-        const result = await response.json();
+        const res = await fetch(url, { method: "POST", body: formData });
+        const result = await res.json();
         if (result.success) {
             alert(result.message);
             closeModal();
             fetchPrograms();
         } else {
-            alert("Error: Invalid Institute ID or this ID don't exist");
+            alert("Error: " + result.error);
         }
     } catch (err) {
-        console.error("Save error:", err);
+        console.error("Save program error:", err);
     }
 }
 
-async function deleteProgram(program_id) {
-    if (!confirm("Are you sure you want to delete this program?")) return;
+async function saveInstitute(e) {
+    e.preventDefault();
+    const id = document.getElementById("ins_id").value.trim();
+    const name = document.getElementById("ins_name").value.trim();
+
+    if (!name) { alert("Fill institute name"); return; }
+
     const formData = new FormData();
-    formData.append("program_id", program_id);
+    formData.append("ins_name", name);
+    if (id) formData.append("ins_id", id);
+
+    const url = id ? "api/program/updateInstitute.php" : "api/program/addInstitute.php";
 
     try {
-        const response = await fetch("api/program/deleteProgram.php", {
-            method: "POST",
-            body: formData
-        });
-        const result = await response.json();
+        const res = await fetch(url, { method: "POST", body: formData });
+        const result = await res.json();
         if (result.success) {
             alert(result.message);
-            fetchPrograms();
+            closeModal();
+            fetchInstitutes();
+            fetchPrograms(); 
         } else {
             alert("Error: " + result.error);
         }
     } catch (err) {
-        console.error("Delete error:", err);
+        console.error("Save institute error:", err);
+    }
+}
+
+async function deleteProgram(program_id) {
+    if (!confirm("Delete this program?")) return;
+    const formData = new FormData();
+    formData.append("program_id", program_id);
+
+    try {
+        const res = await fetch("api/program/deleteProgram.php", { method: "POST", body: formData });
+        const result = await res.json();
+        if (result.success) {
+            alert(result.message);
+            fetchPrograms();
+        } else alert("Error: " + result.error);
+    } catch (err) {
+        console.error("Delete program error:", err);
+    }
+}
+
+async function deleteInstitute(ins_id) {
+    if (!confirm("Delete this institute?")) return;
+    const formData = new FormData();
+    formData.append("ins_id", ins_id);
+
+    try {
+        const res = await fetch("api/program/deleteInstitute.php", { method: "POST", body: formData });
+        const result = await res.json();
+        if (result.success) {
+            alert(result.message);
+            fetchInstitutes();
+            fetchPrograms(); 
+        } else alert("Error: " + result.error);
+    } catch (err) {
+        console.error("Delete institute error:", err);
     }
 }
 
 function searchProgram() {
-    const filter = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.querySelectorAll("#programTableBody tr");
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? "" : "none";
+    const filter = document.getElementById("searchProgramInput").value.toLowerCase();
+    document.querySelectorAll("#programTableBody tr").forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
+    });
+}
+
+function searchInstitute() {
+    const filter = document.getElementById("searchInstituteInput").value.toLowerCase();
+    document.querySelectorAll("#instituteTableBody tr").forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
     });
 }

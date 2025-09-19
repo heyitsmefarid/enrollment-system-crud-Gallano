@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Program Management</title>
+  <title>Programs & Institutes Management</title>
   <link rel="stylesheet" href="programs.css">
 </head>
 <body>
@@ -13,7 +13,6 @@
       <div class="logo">🎓</div>
       <div class="title">Enrollment Portal</div>
     </div>
-
     <nav class="navbar">
       <ul>
         <li><a href="index.html">Students</a></li>
@@ -26,22 +25,40 @@
   </header>
 
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search programs...">
+  <div class="control-group">
+    <input type="text" id="searchProgramInput" placeholder="Search programs...">
     <button id="addProgramBtn">Add Program</button>
   </div>
 
-  <table id="programTable">
+  <div class="control-group">
+    <input type="text" id="searchInstituteInput" placeholder="Search institutes...">
+    <button id="addInstituteBtn">Add Institute</button>
+  </div>
+</div>
+
+  <h2>Programs</h2>
+  <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>Program Name</th>
-        <th>Institute ID</th>
+        <th>Institute</th>
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="programTableBody">
-   
-    </tbody>
+    <tbody id="programTableBody"></tbody>
+  </table>
+
+  <h2>Institutes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Institute Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="instituteTableBody"></tbody>
   </table>
 
   <div id="programModal" class="modal">
@@ -50,14 +67,26 @@
       <h2 id="modalTitle">Add Program</h2>
       <form id="programForm">
         <input type="hidden" id="program_id">
-
         <label>Program Name:</label>
         <input type="text" id="program_name" required>
-
-        <label>Institute ID:</label>
-        <input type="text" id="ins_id" required>
-
+        <label>Institute:</label>
+        <select id="program_ins_id" required>
+      
+        </select>
         <button type="submit" id="saveProgramBtn">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="instituteModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle">Add Institute</h2>
+      <form id="instituteForm">
+        <input type="hidden" id="ins_id">
+        <label>Institute Name:</label>
+        <input type="text" id="ins_name" required>
+        <button type="submit" id="saveInstituteBtn">Save</button>
       </form>
     </div>
   </div>
